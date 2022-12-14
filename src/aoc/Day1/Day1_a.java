@@ -24,31 +24,21 @@ public class Day1_a {
    }
 
    // methods
-   public List<Elf> createElves(String path) {
+   public List<Elf> analyzeInput() {
       int elfIdx = 0;
       Elf elf = new Elf();
-      int next;
+      int line;
 
-      try {
-         FileReader fileReader = new FileReader(path);
-         int line;
-
-         while ((line = fileReader.read()) != -1){
-            next = (char)line;
-            //System.out.println("Line: " + next);
-            if (next == 0) {
-               elf = new Elf();
-               elves.add(elf);
-               elfIdx++;
-            } else {
-               elf.addToInventory(new Food(next));
-            }
+      for (int i = 0; i < input.size(); i++) {
+         if (input.get(i) == "") {
+            elf = new Elf();
+            elves.add(elf);
+            elfIdx++;
+         } else {
+            elf.addToInventory(new Food(Integer.parseInt(input.get(i))));
          }
-      } catch (FileNotFoundException fnf) {
-         System.out.println("Error reading file (" + path + ")");
-         System.out.println(fnf);
-      } finally {
-         return elves;
       }
+
+      return null;
    }
 }
