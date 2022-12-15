@@ -7,13 +7,13 @@ import aoc.Day1.Model.Food;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day1_a extends Day {
+public class Day1_b extends Day {
 
 	// fields
 	private final List<Elf> elves;
 
 	// constructors
-	public Day1_a() {
+	public Day1_b() {
 		super();
 		this.path += String.format("%.4s/", this.getClass().getSimpleName());
 		this.elves = new ArrayList<>();
@@ -27,6 +27,7 @@ public class Day1_a extends Day {
 
 		for (String s : this.input) {
 			if (s.equals("")) {
+				elf.getInventoryValue();
 				this.elves.add(elf);
 				elf = new Elf();
 			} else {
@@ -37,14 +38,28 @@ public class Day1_a extends Day {
 
 	@Override
 	public String getAnswer() {
-		int current;
-		int maxValue = 0;
+		List<Elf> test = new ArrayList<>(this.elves);
+		Elf best;
+		int value = 0;
 
-		for (Elf e : this.elves) {
-			current = e.getInventoryValue();
-			if (current > maxValue) maxValue = current;
+		for (int i = 0; i < 3; i++) {
+			best = getBestElf(test);
+			value += best.getInventoryValue();
+			test.remove(best);
 		}
 
-		return String.valueOf(maxValue);
+		return String.valueOf(value);
+	}
+
+	// class methods
+	private Elf getBestElf(List<Elf> list) {
+		Elf best = null;
+
+		for (Elf e : list) {
+			if (best == null) best = e;
+			if (e.compareTo(best) > 0) best = e;
+		}
+
+		return best;
 	}
 }

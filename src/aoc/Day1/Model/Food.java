@@ -1,4 +1,4 @@
-package aoc;
+package aoc.Day1.Model;
 
 import aoc.Item;
 
